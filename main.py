@@ -48,11 +48,7 @@ class LazyTree:
         nodes.put(self.root)
         height = 0
 
-        while(True):
-
-            # once our queue is empty we can return the height
-            if nodes.qsize() == 0:
-                return height
+        while nodes.qsize() != 0:
 
             # move to the next level of deepthness
             height += 1
@@ -71,6 +67,8 @@ class LazyTree:
 
                 # we reduce the number of nodes visited
                 numNodes -= 1
+
+        return height
 
     # breadth_first_traversal function
     def breadth_first_traversal(self):
