@@ -44,11 +44,8 @@ class LazyTree:
 		nodes.put(self.root)
 		height = 0
 
-		while(True):
+		while(nodes.qsize() != 0):
 
-			# once our queue is empty we can return the height
-			if nodes.qsize() == 0:
-				return height
 
 			# move to the next level of deepthness
 			height += 1
@@ -65,9 +62,10 @@ class LazyTree:
 				if node.right != None:
 					nodes.put(node.right)
 
-				# we reduce the number of nodes visited
+				# we reduce the number of nodes visited and move to the right
 				numNodes -= 1
 
+		return height
 
 def main():
 
