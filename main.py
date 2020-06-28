@@ -70,8 +70,8 @@ class LazyTree:
 
         return height
 
-    # serach function to find if the given node is in the tree and not tagged as erased
-    def search(self, root, node):
+    # member function to search if the given node is in the tree and not tagged as erased
+    def member(self, root, node):
         if root is None:
             return False
         elif node.value == root.value:
