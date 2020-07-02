@@ -96,28 +96,98 @@ class LazyTree:
 
                     numNodes -= 1
 
+    def front(self):
+
+        # start from the root
+        current = self.root
+        # create a stack
+        stack = []
+
+        while(True):
+
+            # push every node to the left onto the stack, until the node visited is None
+            if current != None:
+
+                stack.append(current)
+                current = current.left
+            # Now we iterate our stack
+            elif(stack):
+                #pop the leftmost node
+                current = stack.pop()
+                # check if the node is not erased. Return if it is not erased
+                if(current.isErased == False):
+                    return current
+                # Otherwise, set current node to be the right node
+                current = current.right
+            # If our stack is empty that means that our tree is completely erased, so we return an empty node
+            else:
+                return LazyNode()
+
+    def back(self):
+
+        # start from the root 
+        current = self.root
+        stack = []
+
+        while(True):
+            # push every node to the right onto the stack, until the node visited is None
+            if current != None:
+
+                stack.append(current)
+                current = current.right
+            # Now we iterate our stack
+            elif(stack):
+                #pop the rightmost node
+                current = stack.pop()
+                # check if the node is not erased. Return if it is not erased
+                if(current.isErased == False):
+                    return current
+                # Otherwise, set our current node to be the left node
+                current = current.left
+            # If our stack is empty that means that our tree is completely erased, so we return an empty node
+            else:
+                return Lazynode()
+
+
 
 def main():
 
     # testing
-    root = LazyNode(10)
+    root = LazyNode(22)
     tree = LazyTree(1)
     tree.root = root
+    root.isErased = False
 
-    root.right = LazyNode(16)
-    root.left = LazyNode(20)
-    root.left.left = LazyNode(15)
-    root.left.left.left = LazyNode(83)
-    root.left.left.left.right = LazyNode(8453)
+    root.right = LazyNode(32)
+    root.right.isErased = False
+    root.right.left = LazyNode(24)
+    root.right.left.isErased = False
+    root.right.right = LazyNode(38)
+    root.right.right.isErased = False
+    root.left = LazyNode(12)
+    root.left.isErased = True
+    root.left.left = LazyNode(6)
+    root.left.left.isErased = True
+    root.left.left.right = LazyNode(8)
+    root.left.left.right.isErased = True
+    root.left.left.left = LazyNode(4)
+    root.left.left.left.isErased = True
+    root.left.left.left.left = LazyNode(2)
+    root.left.left.left.left.isErased = True
 
     num = tree.size()
     num2 = tree.height()
 
     j = tree.empty()
+    minimum_element = tree.front()
+    max_element = tree.back()
+
+    print(minimum_element.value, max_element.value, '\n\n')
 
     print(tree.root.left.left.value, tree.nonErased, j, num2, "\n\n")
 
-    tree.breath_first_tranversal()
+    tree.breadth_first_traversal()
+
 
 
 main()
