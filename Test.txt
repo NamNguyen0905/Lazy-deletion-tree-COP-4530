@@ -1,0 +1,26 @@
+Tree 1
+500
+200
+300
+700
+100
+600
+
+remove 300
+remove 700
+
+Tree 2
+10
+20
+30
+50
+60
+70
+
+remove 20
+remove 70
+remove 600
+remove 50
+remove 30
+remove 20
+remove 10
