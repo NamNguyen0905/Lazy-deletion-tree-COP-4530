@@ -77,9 +77,9 @@ class LazyTree:
         elif node.value == root.value:
             return True
         elif node.value < root.value:
-            return self.search(root.left, node)
+            return self.member(root.left, node)
         else:
-            return self.search(root.right, node)
+            return self.member(root.right, node)
 
     # breadth_first_traversal function
     def breadth_first_traversal(self):
@@ -123,7 +123,7 @@ class LazyTree:
                 current = current.left
             # Now we iterate our stack
             elif(stack):
-                #pop the leftmost node
+                # pop the leftmost node
                 current = stack.pop()
                 # check if the node is not erased. Return if it is not erased
                 if(current.isErased == False):
@@ -136,7 +136,7 @@ class LazyTree:
 
     def back(self):
 
-        # start from the root 
+        # start from the root
         current = self.root
         stack = []
 
@@ -148,7 +148,7 @@ class LazyTree:
                 current = current.right
             # Now we iterate our stack
             elif(stack):
-                #pop the rightmost node
+                # pop the rightmost node
                 current = stack.pop()
                 # check if the node is not erased. Return if it is not erased
                 if(current.isErased == False):
@@ -161,7 +161,7 @@ class LazyTree:
 
     #--------------- Mutators ---------------#
 
-    # insert funcion ( to add a new node into a correct location)
+    # insert funcion (to add a new node into a correct location)
     def insert(self, root, node):
         if root is None:
             self.root = node
@@ -179,6 +179,26 @@ class LazyTree:
             else:
                 self.insert(root.right, node)
 
+    # erase function (to mark a specific node as erased)
+    def erase(self, root, erase_node):
+        if root is None:
+            return False
+        elif root.value == erase_node.value:
+            if root.isErased is True:
+                return False
+            else:
+                root.isErased = True
+                return True
+        elif erase_node.value < root.value:
+            if root.left is None:
+                return False
+            else:
+                return self.erase(root.left, erase_node)
+        else:
+            if root.right is None:
+                return False
+            else:
+                return self.erase(root.right, erase_node)
 
 
 def main():
@@ -186,6 +206,7 @@ def main():
     # testing
 
     root = LazyNode(22)
+<<<<<<< HEAD
     tree = LazyTree()
     tree.root = root
 
@@ -270,8 +291,29 @@ def main():
     root.right.right.right.left.isErased = True
 
     tree.breadth_first_traversal()
+=======
+    tree = LazyTree(1)
+    tree.root = root
 
+    root.right = LazyNode(32)
+    root.left = LazyNode(12)
+    root.left.left = LazyNode(6)
+    root.left.left.left = LazyNode(4)
+    root.left.left.right = LazyNode(8)
 
+    num = tree.size()
+    num2 = tree.height()
+
+    j = tree.empty()
+
+    print(tree.root.left.left.value, tree.nonErased, j, num2, "\n\n")
+
+    tree.breadth_first_traversal()
+>>>>>>> 3b369916fe0afa58af1477983e939dc682d90bc2
+
+    print(tree.member(tree.root, LazyNode(8)))
+
+<<<<<<< HEAD
     minimum_element = tree.front()
     max_element = tree.back()
 
@@ -288,11 +330,31 @@ def main():
     root.left.right.left.isErased = True
     root.left.right.right.isErased = True
     root.left.right.right.left.isErased = True
+=======
+    print("True" if tree.erase(tree.root, LazyNode(8)) else "False")
 
-    tree.breadth_first_traversal()
+    # tree = LazyTree()
+    # num = int(input("Enter a number to add to the binary search tree: "))
 
+    # j = tree.empty()
+    # minimum_element = tree.front()
+    # max_element = tree.back()
+
+    # print(minimum_element.value, max_element.value, '\n\n')
+
+    # while num != -1:
+    #     node = LazyNode(num)
+>>>>>>> 3b369916fe0afa58af1477983e939dc682d90bc2
+
+    #     tree.insert(tree.root, node)
+    #     num = int(input("Enter a number to add to the binary search tree: "))
+
+<<<<<<< HEAD
     minimum_element = tree.front()
     max_element = tree.back()
+=======
+    # tree.breadth_first_traversal()
+>>>>>>> 3b369916fe0afa58af1477983e939dc682d90bc2
 
     print('\n\n','minimum element:', minimum_element.value, '\n', 'maximum element:', max_element.value, '\n')
 
