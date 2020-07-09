@@ -157,7 +157,7 @@ class LazyTree:
                 current = current.left
             # If our stack is empty that means that our tree is completely erased, so we return an empty node
             else:
-                return Lazynode()
+                return LazyNode()
 
     #--------------- Mutators ---------------#
 
@@ -185,46 +185,115 @@ def main():
 
     # testing
 
-    # root = LazyNode(22)
-    # tree = LazyTree(1)
-    # tree.root = root
+    root = LazyNode(22)
+    tree = LazyTree()
+    tree.root = root
 
-    # root.right = LazyNode(32)
-    # root.left = LazyNode(12)
-    # root.left.left = LazyNode(6)
-    # root.left.left.left = LazyNode(4)
-    # root.left.left.right = LazyNode(8)
+    # left side pdf example
+    # 2nd level
+    root.left = LazyNode(12)
+    root.left.isErased = False
+    root.right = LazyNode(32)
+    root.right.isErased = False
+    # 3rd level
+    root.left.left = LazyNode(6)
+    root.left.left.isErased = False
+    root.left.right = LazyNode(16)
+    root.left.right.isErased = False
+    root.right.left = LazyNode(24)
+    root.right.left.isErased = False
+    root.right.right = LazyNode(38)
+    root.right.right.isErased = False
+    #4th level 
+    root.left.left.left = LazyNode(4)
+    root.left.left.left.isErased = False
+    root.left.left.right= LazyNode(8)
+    root.left.left.right.isErased = False
+    root.left.right.left = LazyNode(14)
+    root.left.right.left.isErased = False
+    root.left.right.right = LazyNode(20)
+    root.left.right.right.isErased = False
+    root.right.left.right = LazyNode(28)
+    root.right.left.right.isErased = False
+    root.right.right.left = LazyNode(34)
+    root.right.right.left.isErased = False
+    root.right.right.right = LazyNode(42)
+    root.right.right.right.isErased = False
+    #5th level
+    root.left.left.left.left = LazyNode(2)
+    root.left.left.left.isErased = False
+    root.left.left.right.right = LazyNode(10)
+    root.left.left.right.right.isErased = False
+    root.left.right.right.left = LazyNode(18)
+    root.left.right.right.left.isErased = False
+    root.right.left.right.left = LazyNode(26)
+    root.right.left.right.left.isErased = False
+    root.right.left.right.right = LazyNode(30)
+    root.right.left.right.right.isErased = False
+    root.right.right.left.right = LazyNode(36)
+    root.right.right.left.right.isErased = False
+    root.right.right.right.left = LazyNode(40)
+    root.right.right.right.left.isErased = False
 
-    # num = tree.size()
-    # num2 = tree.height()
+
+
+
+
+
+    num = tree.size()
+    num2 = tree.height()
+
+    j = tree.empty()
+
+    # tree = LazyTree()
+    # num = int(input("Enter a number to add to the binary search tree: "))
+
 
     # j = tree.empty()
 
-    # print(tree.root.left.left.value, tree.nonErased, j, num2, "\n\n")
-
-    # tree.breadth_first_traversal()
-
-    # print(tree.search(tree.root, LazyNode(8)))
-
-    tree = LazyTree()
-    num = int(input("Enter a number to add to the binary search tree: "))
+    # while num != -1:
+    #     node = LazyNode(num)
 
 
-    j = tree.empty()
-    minimum_element = tree.front()
-    max_element = tree.back()
+    #     tree.insert(tree.root, node)
+    #     num = int(input("Enter a number to add to the binary search tree: "))
 
-    print(minimum_element.value, max_element.value, '\n\n')
+    tree.breadth_first_traversal()
 
-    while num != -1:
-        node = LazyNode(num)
+    print('\n\n', 'after deletion', '\n\n')
 
-
-        tree.insert(tree.root, node)
-        num = int(input("Enter a number to add to the binary search tree: "))
+    #1st test
+    root.left.left.right.isErased = True
+    root.right.left.isErased = True
+    root.right.right.left.isErased = True
+    root.right.right.right.isErased = True
+    root.right.right.right.left.isErased = True
 
     tree.breadth_first_traversal()
 
 
+    minimum_element = tree.front()
+    max_element = tree.back()
+
+    print('\n\n','minimum element:', minimum_element.value, '\n', 'maximum element:', max_element.value, '\n')
+
+     root.left.left.right.isErased = False
+    root.right.left.isErased = False
+    root.right.right.right.isErased = False
+    root.right.right.right.left.isErased = False
+
+    #2nd test
+    root.left.isErased = True
+    root.left.right.isErased = True
+    root.left.right.left.isErased = True
+    root.left.right.right.isErased = True
+    root.left.right.right.left.isErased = True
+
+    tree.breadth_first_traversal()
+
+    minimum_element = tree.front()
+    max_element = tree.back()
+
+    print('\n\n','minimum element:', minimum_element.value, '\n', 'maximum element:', max_element.value, '\n')
 
 main()
