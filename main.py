@@ -200,6 +200,20 @@ class LazyTree:
             else:
                 return self.erase(root.right, erase_node)
 
+    # clear function (to delete all nodes in the tree)
+    def clear(self):
+        self.clear_helper(self.root)
+        self.root = None
+
+    def clear_helper(self, root):
+        if root is None:
+            return
+        else:
+            self.clear_helper(root.left)
+            root.left = None
+            self.clear_helper(root.right)
+            root.right = None
+
 
 def main():
 
@@ -227,6 +241,9 @@ def main():
     print(tree.member(tree.root, LazyNode(8)))
 
     print("True" if tree.erase(tree.root, LazyNode(8)) else "False")
+
+    tree.clear()
+    print(tree.root)
 
     # tree = LazyTree()
     # num = int(input("Enter a number to add to the binary search tree: "))
