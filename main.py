@@ -248,6 +248,7 @@ class LazyTree:
             successor = self.find_successor(current.right)
             # get the value of the successor
             value = successor.value
+            print('sucessor value:', successor.value)
             # delete the succsor recursively ( sub case: successor has a right child)
             self.delete_node(value)
 
@@ -277,9 +278,6 @@ class LazyTree:
 
     def clean(self):
         erased_nodes = []
-        # if our root is zero we don't have any deepthness
-        if self.root.isErased == True:
-            erased_nodes.append(self.root)
         # create a queue using STL
         nodes = []
 
@@ -311,6 +309,8 @@ class LazyTree:
         # iterate each deleted node
         for del_node in erased_nodes:
             self.delete_node(del_node.value)
+            self.breadth_first_traversal()
+            print()
 
 def main():
 
@@ -320,7 +320,7 @@ def main():
 
     tree = LazyTree()
     tree.root = root
-    tree.root.isErased = False
+    tree.root.isErased = True
 
     # left side pdf example
     # 2nd level
