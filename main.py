@@ -408,9 +408,9 @@ def main():
             print("The lazy-deletion tree:")
             tree.breadth_first_traversal()
         elif command == 4:
-            print("The minimum non-erased node is " + tree.front().value)
+            print("The minimum non-erased node is " + str(tree.front().value))
         elif command == 5:
-            print("The maximum non-erased node is " + tree.back().value)
+            print("The maximum non-erased node is " + str(tree.back().value))
         elif command == 6:
             while True:
                 val = input("Enter value to find: ")
