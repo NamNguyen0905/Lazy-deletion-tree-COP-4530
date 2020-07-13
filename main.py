@@ -71,42 +71,20 @@ class LazyTree:
         return height
 
     # member function to search if the given node is in the tree and not tagged as erased
-    def member(self, root, node):
+    def member(self, node):
+        return self.member_helper(self.root, node)
+
+    def member_helper(self, root, node):
         if root is None:
             return False
         elif node.value == root.value:
             return True
         elif node.value < root.value:
-            return self.member(root.left, node)
+            return self.member_helper(root.left, node)
         else:
-            return self.member(root.right, node)
+            return self.member_helper(root.right, node)
 
-    # breadth_first_traversal function
-    def breadth_first_traversal(self):
-        if self.root is None:
-            print(" ")
-        else:
-            nodes = queue.Queue()
-            nodes.put(self.root)
-
-            while nodes.qsize() != 0:
-                numNodes = nodes.qsize()
-
-                # Iterate each node
-                while(numNodes > 0):
-                    # Get the front element
-                    node = nodes.get()
-                    print(str(node.value) + ("x " if node.isErased ==
-                                             True else " "), end="")
-
-                    # Add child node into queue if existing
-                    if node.left is not None:
-                        nodes.put(node.left)
-                    if node.right is not None:
-                        nodes.put(node.right)
-
-                    numNodes -= 1
-
+    # front function (to get the minimum non-erased node)
     def front(self):
 
         # start from the root
@@ -134,6 +112,7 @@ class LazyTree:
             else:
                 return LazyNode()
 
+    # back function (to get the maximum non-erased node)
     def back(self):
 
         # start from the root
@@ -159,28 +138,70 @@ class LazyTree:
             else:
                 return LazyNode()
 
+    # breadth_first_traversal function
+    def breadth_first_traversal(self):
+        if self.root is None:
+            print(" ")
+        else:
+            nodes = queue.Queue()
+            nodes.put(self.root)
+
+            while nodes.qsize() != 0:
+                numNodes = nodes.qsize()
+
+                # Iterate each node
+                while(numNodes > 0):
+                    # Get the front element
+                    node = nodes.get()
+                    print(str(node.value) + ("x " if node.isErased ==
+                                             True else " "), end="")
+
+                    # Add child node into queue if existing
+                    if node.left is not None:
+                        nodes.put(node.left)
+                    if node.right is not None:
+                        nodes.put(node.right)
+
+                    numNodes -= 1
+
     #--------------- Mutators ---------------#
 
     # insert funcion (to add a new node into a correct location)
-    def insert(self, root, node):
+    def insert(self, node):
+        return self.insert_helper(self.root, node)
+
+    def insert_helper(self, root, node):
         if root is None:
             self.root = node
             self.nonErased += 1
+            return True
+        elif node.value == root.value:
+            if root.isErased == False:
+                return False
+            else:
+                root.isErased == False
+                self.nonErased += 1
+                return True
         elif node.value < root.value:
             if root.left is None:
                 root.left = node
                 self.nonErased += 1
+                return True
             else:
-                self.insert(root.left, node)
+                return self.insert_helper(root.left, node)
         else:
             if root.right is None:
                 root.right = node
                 self.nonErased += 1
+                return True
             else:
-                self.insert(root.right, node)
+                return self.insert_helper(root.right, node)
 
     # erase function (to mark a specific node as erased)
-    def erase(self, root, erase_node):
+    def erase(self, node):
+        return self.erase_helper(self.root, node)
+
+    def erase_helper(self, root, erase_node):
         if root is None:
             return False
         elif root.value == erase_node.value:
@@ -194,12 +215,12 @@ class LazyTree:
             if root.left is None:
                 return False
             else:
-                return self.erase(root.left, erase_node)
+                return self.erase_helper(root.left, erase_node)
         else:
             if root.right is None:
                 return False
             else:
-                return self.erase(root.right, erase_node)
+                return self.erase_helper(root.right, erase_node)
 
     # clear function (to delete all nodes in the tree)
     def clear(self):
@@ -215,6 +236,7 @@ class LazyTree:
             self.clear_helper(root.right)
             root.right = None
 
+    # clean function (to remove all erased nodes)
     def find_successor(self, current_node):
         while current_node.left:
             current_node = current_node.left
@@ -325,82 +347,179 @@ class LazyTree:
             self.breadth_first_traversal()
             print()
             self.delete_node(del_node.value)
-            
 
 
 def main():
+    print("\n#########################################",
+          "\n#### Lazy-deletion Binary Search Tree ###",
+          "\n#########################################",)
 
-    # testing
-
-    root = LazyNode(22)
+    print("\n1. Insert a node",
+          "\n2. Erase a node",
+          "\n3. Breadth first traversal",
+          "\n4. Get the minimum non-erased node",
+          "\n5. Get the maximum non-erased node",
+          "\n6. Check the existence of a node",
+          "\n7. Get the height of the the BST",
+          "\n8. Get the number of non-erased nodes",
+          "\n9. Delete all nodes tagged as erased",
+          "\n10. Delete all the nodes in the tree",
+          "\n11. Check if the BST is empty",
+          "\n12. Exit\n")
 
     tree = LazyTree()
-    tree.root = root
-    tree.root.isErased = True
 
-    # left side pdf example
-    # 2nd level
-    root.left = LazyNode(12)
-    root.left.isErased = False
-    root.right = LazyNode(32)
-    root.right.isErased = False
-    # 3rd level
-    root.left.left = LazyNode(6)
-    root.left.left.isErased = False
-    root.left.right = LazyNode(16)
-    root.left.right.isErased = False
-    root.right.left = LazyNode(24)
-    root.right.left.isErased = True
-    root.right.right = LazyNode(38)
-    root.right.right.isErased = False
-    # 4th level
-    root.left.left.left = LazyNode(4)
-    root.left.left.left.isErased = False
-    root.left.left.right = LazyNode(8)
-    root.left.left.right.isErased = True
-    root.left.right.left = LazyNode(14)
-    root.left.right.left.isErased = False
-    root.left.right.right = LazyNode(20)
-    root.left.right.right.isErased = False
-    root.right.left.right = LazyNode(28)
-    root.right.left.right.isErased = False
-    root.right.right.left = LazyNode(34)
-    root.right.right.left.isErased = True
-    root.right.right.right = LazyNode(42)
-    root.right.right.right.isErased = True
-    # 5th level
-    root.left.left.left.left = LazyNode(2)
-    root.left.left.left.isErased = False
-    root.left.left.right.right = LazyNode(10)
-    root.left.left.right.right.isErased = False
-    root.left.right.right.left = LazyNode(18)
-    root.left.right.right.left.isErased = False
-    root.right.left.right.left = LazyNode(26)
-    root.right.left.right.left.isErased = False
-    root.right.left.right.right = LazyNode(30)
-    root.right.left.right.right.isErased = False
-    root.right.right.left.right = LazyNode(36)
-    root.right.right.left.right.isErased = False
-    root.right.right.right.left = LazyNode(40)
-    root.right.right.right.left.isErased = True
+    while True:
+        command = input("Please enter command: ")
+        try:
+            command = int(command)
+        except ValueError as e:
+            print("Enter valid int value")
+        else:
+            if command < 1 or command > 11:
+                print("Enter valid int value")
+            else:
+                break
 
-    num = tree.size()
-    num2 = tree.height()
+    while command != 12:
+        if command == 1:
+            while True:
+                val = input("Enter value to insert: ")
+                try:
+                    val = int(val)
+                except ValueError as e:
+                    print("Enter valid int value")
+                else:
+                    break
+            print(str(val) + (" is inserted into the tree." if tree.insert(LazyNode(val))
+                              else "is already existed."))
+        elif command == 2:
+            while True:
+                val = input("Enter value to erase: ")
+                try:
+                    val = int(val)
+                except ValueError as e:
+                    print("Enter valid int value")
+                else:
+                    break
+            print(str(val) + (" is erased from the tree." if tree.erase(LazyNode(val))
+                              else "doesn't exist."))
+        elif command == 3:
+            print("The lazy-deletion tree:")
+            tree.breadth_first_traversal()
+        elif command == 4:
+            print("The minimum non-erased node is " + tree.front().value)
+        elif command == 5:
+            print("The maximum non-erased node is " + tree.back().value)
+        elif command == 6:
+            while True:
+                val = input("Enter value to find: ")
+                try:
+                    val = int(val)
+                except ValueError as e:
+                    print("Enter valid int value")
+                else:
+                    break
+            print("Node with value {} is ".format(
+                val) + ("" if tree.member(LazyNode(val)) else "not") + " in the tree.")
+        elif command == 7:
+            print("The tree has " + tree.height() +
+                  (" level." if tree.height() == 1 else " levels."))
+        elif command == 8:
+            print("There " + ("are {} non-erased nodes.".format(tree.size())
+                              if tree.size() > 1 else "is 1 non-erased node."))
+        elif command == 9:
+            tree.clean()
+            print("All nodes tagged as erased are removed from the tree.")
+        elif command == 10:
+            tree.clear()
+            print("All nodes are delelted.")
+        elif command == 11:
+            print("The tree is " + ("" if tree.empty() else "not") + " empty.")
+        else:
+            break
 
-    j = tree.empty()
-    tree.breadth_first_traversal()
-    print()
-    tree.clean()
-    bools = tree.member(tree.root, LazyNode(30))
-    print(bools)
-    print('\nAfter clean()')
-    tree.breadth_first_traversal()
+        while True:
+            command = input("\nPlease enter command: ")
+            try:
+                command = int(command)
+            except ValueError as e:
+                print("Enter valid int value")
+            else:
+                if command < 1 or command > 11:
+                    print("Enter valid int value")
+                else:
+                    break
 
-    minimum_element = tree.front()
-    max_element = tree.back()
-    print('\n\n', 'minimum element:', minimum_element.value,
-          '\n', 'maximum element:', max_element.value, '\n')
+    # testing
+    # root = LazyNode(22)
 
+    # tree = LazyTree()
+    # tree.root = root
+    # tree.root.isErased = True
+
+    # # left side pdf example
+    # # 2nd level
+    # root.left = LazyNode(12)
+    # root.left.isErased = False
+    # root.right = LazyNode(32)
+    # root.right.isErased = False
+    # # 3rd level
+    # root.left.left = LazyNode(6)
+    # root.left.left.isErased = False
+    # root.left.right = LazyNode(16)
+    # root.left.right.isErased = False
+    # root.right.left = LazyNode(24)
+    # root.right.left.isErased = True
+    # root.right.right = LazyNode(38)
+    # root.right.right.isErased = False
+    # # 4th level
+    # root.left.left.left = LazyNode(4)
+    # root.left.left.left.isErased = False
+    # root.left.left.right = LazyNode(8)
+    # root.left.left.right.isErased = True
+    # root.left.right.left = LazyNode(14)
+    # root.left.right.left.isErased = False
+    # root.left.right.right = LazyNode(20)
+    # root.left.right.right.isErased = False
+    # root.right.left.right = LazyNode(28)
+    # root.right.left.right.isErased = False
+    # root.right.right.left = LazyNode(34)
+    # root.right.right.left.isErased = True
+    # root.right.right.right = LazyNode(42)
+    # root.right.right.right.isErased = True
+    # # 5th level
+    # root.left.left.left.left = LazyNode(2)
+    # root.left.left.left.isErased = False
+    # root.left.left.right.right = LazyNode(10)
+    # root.left.left.right.right.isErased = False
+    # root.left.right.right.left = LazyNode(18)
+    # root.left.right.right.left.isErased = False
+    # root.right.left.right.left = LazyNode(26)
+    # root.right.left.right.left.isErased = False
+    # root.right.left.right.right = LazyNode(30)
+    # root.right.left.right.right.isErased = False
+    # root.right.right.left.right = LazyNode(36)
+    # root.right.right.left.right.isErased = False
+    # root.right.right.right.left = LazyNode(40)
+    # root.right.right.right.left.isErased = True
+
+    # num = tree.size()
+    # num2 = tree.height()
+
+    # j = tree.empty()
+    # tree.breadth_first_traversal()
+    # print()
+    # tree.clean()
+    # bools = tree.member(tree.root, LazyNode(30))
+    # print(bools)
+    # print('\nAfter clean()')
+    # tree.breadth_first_traversal()
+
+    # minimum_element = tree.front()
+    # max_element = tree.back()
+    # print('\n\n', 'minimum element:', minimum_element.value,
+    #       '\n', 'maximum element:', max_element.value, '\n')
 
 
 main()
