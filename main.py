@@ -423,7 +423,7 @@ def main():
             print("Node with value {} is ".format(
                 val) + ("" if tree.member(LazyNode(val)) else "not") + " in the tree.")
         elif command == 7:
-            print("The tree has " + tree.height() +
+            print("The tree has " + str(tree.height()) +
                   (" level." if tree.height() == 1 else " levels."))
         elif command == 8:
             print("There " + ("are {} non-erased nodes.".format(tree.size())
