@@ -37,8 +37,8 @@ class LazyTree:
     # height calculates the deepthness of the tree by using a queue
     def height(self):
 
-        # if our root is zero we don't have any deepthness
-        if self.root.value is None:
+        # if our tree is empty we don't have any deepthness
+        if self.empty() == True:
             return 0
 
         # create a queue using STL
@@ -344,8 +344,6 @@ class LazyTree:
                 numNodes -= 1
         # iterate each deleted node
         for del_node in erased_nodes:
-            self.breadth_first_traversal()
-            print()
             self.delete_node(del_node.value)
 
 
