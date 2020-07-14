@@ -390,7 +390,7 @@ def main():
                 else:
                     break
             print(str(val) + (" is inserted into the tree." if tree.insert(LazyNode(val))
-                              else "is already existed."))
+                              else "is already in the tree."))
         elif command == 2:
             while True:
                 val = input("Enter value to erase: ")
@@ -401,7 +401,7 @@ def main():
                 else:
                     break
             print(str(val) + (" is erased from the tree." if tree.erase(LazyNode(val))
-                              else "doesn't exist."))
+                              else " doesn't exist."))
         elif command == 3:
             print("The lazy-deletion tree:")
             tree.breadth_first_traversal()
