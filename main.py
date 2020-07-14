@@ -431,7 +431,7 @@ def main():
             print("All nodes tagged as erased are removed from the tree.")
         elif command == 10:
             tree.clear()
-            print("All nodes are delelted.")
+            print("All nodes are deleted.")
         elif command == 11:
             print("The tree is " + ("" if tree.empty() else "not") + " empty.")
         else:
