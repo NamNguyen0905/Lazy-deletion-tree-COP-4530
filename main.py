@@ -374,7 +374,7 @@ def main():
         except ValueError as e:
             print("Enter valid int value")
         else:
-            if command < 1 or command > 11:
+            if command < 1 or command > 12:
                 print("Enter valid int value")
             else:
                 break
@@ -444,7 +444,7 @@ def main():
             except ValueError as e:
                 print("Enter valid int value")
             else:
-                if command < 1 or command > 11:
+                if command < 1 or command > 12:
                     print("Enter valid int value")
                 else:
                     break
