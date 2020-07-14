@@ -171,11 +171,13 @@ class LazyTree:
         return self.insert_helper(self.root, node)
 
     def insert_helper(self, root, node):
+        # Check the existence of root
         if root is None:
             self.root = node
             self.nonErased += 1
             return True
         elif node.value == root.value:
+            # Check if the currrent node is erased or not
             if root.isErased == False:
                 return False
             else:
@@ -231,8 +233,10 @@ class LazyTree:
         if root is None:
             return
         else:
+            # Delete the left child
             self.clear_helper(root.left)
             root.left = None
+            # Delete the right child
             self.clear_helper(root.right)
             root.right = None
 
