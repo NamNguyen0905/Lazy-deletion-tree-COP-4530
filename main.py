@@ -215,9 +215,6 @@ class LazyTree:
             if root.isErased is True:
                 return False
             else:
-                if self.nonErased == 1:
-                    self.nonErased = 0
-                    return True
                 self.nonErased -= 1
                 root.isErased = True
                 return True
@@ -456,7 +453,7 @@ def main():
                   (" level." if tree.height() == 1 else " levels."))
         elif command == 8:
             print("There " + ("are {} non-erased nodes.".format(tree.size())
-                              if tree.size() > 1 else "is 1 non-erased node."))
+                              if tree.size() > 1 else "is {} non-erased node.".format(tree.size())))
         elif command == 9:
             tree.clean()
             print("All nodes tagged as erased are removed from the tree.")
