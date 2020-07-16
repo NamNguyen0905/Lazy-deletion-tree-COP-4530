@@ -215,6 +215,9 @@ class LazyTree:
             if root.isErased is True:
                 return False
             else:
+                if self.nonErased == 1:
+                    self.nonErased = 0
+                    return True
                 self.nonErased -= 1
                 root.isErased = True
                 return True
