@@ -181,22 +181,27 @@ class LazyTree:
             if root.isErased == False:
                 return False
             else:
+                # Unerase the node and increase the count
                 root.isErased == False
                 self.nonErased += 1
                 return True
         elif node.value < root.value:
+            # Insert the node to the left of the current node
             if root.left is None:
                 root.left = node
                 self.nonErased += 1
                 return True
             else:
+                # Traverse to the left node
                 return self.insert_helper(root.left, node)
         else:
+            # Insert the node to the right of the current node
             if root.right is None:
                 root.right = node
                 self.nonErased += 1
                 return True
             else:
+                # Traverse to the right node
                 return self.insert_helper(root.right, node)
 
     # erase function (to mark a specific node as erased)
