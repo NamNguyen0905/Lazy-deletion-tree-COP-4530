@@ -233,6 +233,7 @@ class LazyTree:
     def clear(self):
         self.clear_helper(self.root)
         self.root = None
+        self.nonErased -= 1
 
     def clear_helper(self, root):
         if root is None:
@@ -241,9 +242,12 @@ class LazyTree:
             # Delete the left child
             self.clear_helper(root.left)
             root.left = None
+            self.nonErased -= 1
+
             # Delete the right child
             self.clear_helper(root.right)
             root.right = None
+            self.nonErased -= 1
 
     # clean function (to remove all erased nodes)
     def find_successor(self, current_node):
